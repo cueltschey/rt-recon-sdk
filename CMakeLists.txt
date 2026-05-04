@@ -24,15 +24,17 @@ configure_file(
 # Add the autoconfig library
 add_subdirectory(src/autoconfig)
 
-# Install targets
-install(EXPORT rt-recon-sdkTargets
-    FILE rt-recon-sdkTargets.cmake
-    NAMESPACE rt-recon-sdk::
-    DESTINATION lib/cmake/rt-recon-sdk
-)
+# Install targets (only when building standalone, not via FetchContent)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    install(EXPORT rt-recon-sdkTargets
+        FILE rt-recon-sdkTargets.cmake
+        NAMESPACE rt-recon-sdk::
+        DESTINATION lib/cmake/rt-recon-sdk
+    )
 
-install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/rt-recon-sdkConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/rt-recon-sdkConfigVersion.cmake"
-    DESTINATION lib/cmake/rt-recon-sdk
-)
+    install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/rt-recon-sdkConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/rt-recon-sdkConfigVersion.cmake"
+        DESTINATION lib/cmake/rt-recon-sdk
+    )
+endif()

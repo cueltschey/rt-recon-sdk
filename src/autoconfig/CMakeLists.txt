@@ -15,7 +15,9 @@ target_include_directories(rt-recon-autoconfig PUBLIC
 )
 
 # Link required dependencies
-target_link_libraries(rt-recon-autoconfig PUBLIC
+# These are PRIVATE because they are implementation details
+# Users of rt-recon-autoconfig don't need to link against srsRAN
+target_link_libraries(rt-recon-autoconfig PRIVATE
     srsran_phch
     srsran_phy
     srsran_common
