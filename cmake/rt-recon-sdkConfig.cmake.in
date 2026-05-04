@@ -1,0 +1,25 @@
+# rt-recon-sdk Config file for CMake
+# This file is used by find_package(rt-recon-sdk)
+
+# Compute paths
+get_filename_component(RT_RECON_SDK_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
+get_filename_component(RT_RECON_SDK_INSTALL_DIR "${RT_RECON_SDK_CMAKE_DIR}" DIRECTORY)
+get_filename_component(RT_RECON_SDK_ROOT_DIR "${RT_RECON_SDK_INSTALL_DIR}" DIRECTORY)
+
+# Our library dependencies
+set(RT_RECON_SDK_INCLUDE_DIRS "@RT_RECON_SDK_INCLUDE_DIR@")
+set(RT_RECON_SDK_LIBRARY_DIRS "${RT_RECON_SDK_INSTALL_DIR}/lib")
+
+# Import the targets
+if(NOT TARGET rt-recon-autoconfig)
+    include("${RT_RECON_SDK_CMAKE_DIR}/rt-recon-sdkTargets.cmake" OPTIONAL)
+endif()
+
+# If that didn't work, define the target manually
+if(NOT TARGET rt-recon-autoconfig)
+    add_library(rt-recon-autoconfig STATIC IMPORTED)
+    set_target_properties(rt-recon-autoconfig PROPERTIES
+        IMPORTED_LOCATION "@CMAKE_CURRENT_BINARY_DIR@/librt-recon-autoconfig.a"
+        INTERFACE_INCLUDE_DIRECTORIES "${RT_RECON_SDK_INCLUDE_DIRS}"
+    )
+endif()
