@@ -3,7 +3,7 @@
 
 namespace rtrs {
 
-bool load_from_influxdb(Config& config)
+bool ConfigParser::load_from_influxdb(Config& config)
 {
     LOG_INFO("Loading configuration from InfluxDB");
 
