@@ -48,8 +48,11 @@ write_basic_package_version_file(
     COMPATIBILITY SameMajorVersion
 )
 
+# Find the cmake directory relative to this file
+get_filename_component(RT_RECON_SDK_CMAKE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../cmake" ABSOLUTE)
+
 configure_file(
-    "${CMAKE_SOURCE_DIR}/cmake/rt-recon-sdkConfig.cmake.in"
+    "${RT_RECON_SDK_CMAKE_DIR}/rt-recon-sdkConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/rt-recon-sdkConfig.cmake"
     @ONLY
 )
