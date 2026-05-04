@@ -49,7 +49,14 @@ write_basic_package_version_file(
 )
 
 # Find the cmake directory relative to this file
-get_filename_component(RT_RECON_SDK_CMAKE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../cmake" ABSOLUTE)
+# When fetched by FetchContent, the structure is different
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../cmake/rt-recon-sdkConfig.cmake.in")
+    set(RT_RECON_SDK_CMAKE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
+elseif(EXISTS "${CMAKE_SOURCE_DIR}/cmake/rt-recon-sdkConfig.cmake.in")
+    set(RT_RECON_SDK_CMAKE_DIR "${CMAKE_SOURCE_DIR}/cmake")
+else()
+    message(FATAL_ERROR "Cannot find rt-recon-sdkConfig.cmake.in")
+endif()
 
 configure_file(
     "${RT_RECON_SDK_CMAKE_DIR}/rt-recon-sdkConfig.cmake.in"
